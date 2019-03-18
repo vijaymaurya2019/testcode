@@ -7,7 +7,7 @@ namespace UnitTest
     [TestClass]
     public class UnitTest1
     {
- // test method for file version------------------------------------------------
+ // test method for different file version format ------------------------------------------------
         [TestMethod]
         public void TestVersion1()
         {
@@ -67,7 +67,7 @@ namespace UnitTest
             Assert.IsTrue(result.Contains("Version"));
         }
 //-----------------------------------------------------------------------------------//
-        // test method for file size......
+        // test method for different file size format......
         [TestMethod]
         public void TestSize1()
         {
