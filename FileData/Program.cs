@@ -12,81 +12,45 @@ namespace FileData
         public static Boolean isValid =true;
         public static void Main(string[] args)
         {
-            ValidateArgs(args);  //validate arguments...    
-
-            if (isValid)
-            {
-                FileDetails obj = new FileDetails(); //Call to thirdParty class
-                string versionorSize = CheckForfunctionalityCall(args[0].ToString());
-                if (versionorSize==ApplicationConstants.versionText)
-                    Console.WriteLine("Version : " + obj.Version(args[1]));       //Call to third party version method
-                else
-                    Console.WriteLine("Size : " + obj.Size(args[1]));             //Call to third party size method
-            }
+            Console.WriteLine(PopulateFileData(args));
             Console.ReadLine();
         }
 
-        //Check for which functionality method to call version, size
-        private static string CheckForfunctionalityCall(string info)
+        public static string PopulateFileData(string[] args)
         {
-            string versionOrSize = string.Empty;
-            if (ApplicationConstants.VersionArgsArr.Contains(info))
-                versionOrSize = ApplicationConstants.versionText;
-            else if (ApplicationConstants.SizeArgsArr.Contains(info))
-                versionOrSize = ApplicationConstants.SizeText;
-            return versionOrSize;
-        }
-
-        //Validate number and correct format of arguments..
-        private static void ValidateArgs(string[] args)
-        {
-            string versionorSize, FileName;
+            string Message = string.Empty;
+            string versionorSize = string.Empty;
 
             if (args.Length != 2)
             {
-                Console.WriteLine(ApplicationConstants.errorMsgNumOfArguments);
-                isValid = false;
-                return;
+                Message = ApplicationConstants.errorMsgNumOfArguments;
+                return Message;
             }
 
-            versionorSize = args[0];
-            FileName = args[1];
-
-            if (!ValidateFunctionArgs(versionorSize))
+            try
             {
-                Console.WriteLine(ApplicationConstants.errorMsgInvalidVersionOrSize);
-                isValid = false;
-                return;
-            }
+                FileData objFileData = new FileData(args[0], args[1]);
+                Message = objFileData.ValidateArgs();  //validate arguments...
 
-            if (!ValidatePath(FileName))
+                if (String.IsNullOrEmpty(Message))
+                {
+                    versionorSize = objFileData.CheckForfunctionalityCall();
+                    //Call to thirdParty class
+                    FileDetails objFileDetails = new FileDetails();
+                    if (versionorSize == ApplicationConstants.versionText)
+                        //Call to third party version method
+                        Message = "Version" + objFileDetails.Version(args[1]);
+                    else
+                        //Call to Size method
+                       Message= "Size" + objFileDetails.Size(args[1]);
+                }
+            }
+            catch(Exception ex)
             {
-                Console.WriteLine(ApplicationConstants.errorMsgInvalidFilePath);
-                isValid = false;
-                return;
+                Message = ex.Message;
             }
-           
-        }
 
-        //validate if version or size text is provided...
-        private static Boolean ValidateFunctionArgs(string info)
-        {
-            if (ApplicationConstants.VersionArgsArr.Contains(info))
-                return true;
-            else if (ApplicationConstants.SizeArgsArr.Contains(info))
-                return true;
-            else
-                return false;
-       }
-
-        //Validate if correct file Path is provided
-        public static bool ValidatePath(string FileName)
-        {
-            string ErrorMessage = string.Empty;
-            Regex r = new Regex(@"^([a-zA-Z]:/)([a-z_\-\s0-9\.]+)+\.(txt)$");
-            Boolean x = r.IsMatch(FileName);
-            return x;
+            return Message;
         }
-       
     }
 }
