@@ -40,9 +40,15 @@ namespace UnitTest
             Assert.IsTrue(result.Contains("Version"));
         }
 
+        [TestMethod]
+        public void TestVersion5()
+        {
+            string[] data = { "xx", "c:/test.txt" };
+            string result = Program.FileProcessing(data);
+            Assert.IsTrue(!result.Contains("Version"));
+        }
 
-        
-//-----------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------//
         // test method for different file size format......
         [TestMethod]
         public void TestSize1()

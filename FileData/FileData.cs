@@ -21,13 +21,13 @@ namespace FileData
         public FileData(string[] args)
         {
             ArgsLength = args.Length;
-            _Function = args[0];
+            _Function = args[0];  
             _FileName = args[1];
 
 
             VersionArgsArr = ConfigurationManager.AppSettings["VersionArgsArr"].Split(',');
             //VersionArgsArr = new string[]{ "-v", "--v", "/v", "-version" };
-            SizeArgsArr = new string[] { "-s,--s,/s,-size" }; 
+            SizeArgsArr = ConfigurationManager.AppSettings["SizeArgsArr"].Split(',');
             errorMsgNumOfArguments = "Incorrect number of Arguments supplied.";
             errorMsgInvalidVersionOrSize = "Please provide correct version or size arguments";
             errorMsgInvalidFilePath = "Incorrect file path specified.";
