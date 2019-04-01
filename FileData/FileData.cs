@@ -27,7 +27,7 @@ namespace FileData
 
             VersionArgsArr = ConfigurationManager.AppSettings["VersionArgsArr"].Split(',');
             //VersionArgsArr = new string[]{ "-v", "--v", "/v", "-version" };
-            SizeArgsArr = new string[] { "-s,--s,/s,-size" };
+            SizeArgsArr = new string[] { "-s,--s,/s,-size" }; 
             errorMsgNumOfArguments = "Incorrect number of Arguments supplied.";
             errorMsgInvalidVersionOrSize = "Please provide correct version or size arguments";
             errorMsgInvalidFilePath = "Incorrect file path specified.";
