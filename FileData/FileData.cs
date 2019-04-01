@@ -24,7 +24,9 @@ namespace FileData
             _Function = args[0];
             _FileName = args[1];
 
-            VersionArgsArr = new string[]{ "-v", "--v", "/v", "-version" };
+
+            VersionArgsArr = ConfigurationManager.AppSettings["VersionArgsArr"].Split(',');
+            //VersionArgsArr = new string[]{ "-v", "--v", "/v", "-version" };
             SizeArgsArr = new string[] { "-s,--s,/s,-size" };
             errorMsgNumOfArguments = "Incorrect number of Arguments supplied.";
             errorMsgInvalidVersionOrSize = "Please provide correct version or size arguments";
@@ -36,7 +38,7 @@ namespace FileData
         private Boolean ValidateFunctionArgs()
         {
            
-            if (VersionArgsArr.Contains("-version"))
+            if (VersionArgsArr.Contains(_Function))
                 return true;
             else if (SizeArgsArr.Contains(_Function))
                 return true;
